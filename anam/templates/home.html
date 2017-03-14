@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>ANAM SERVER</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}" />
+		<style type="text/css">
+			body { padding-top: 60px; }
+			img.logo { height: 50px; padding:5px; }
+			.setting { font-weight: bold; font-family: monospace; }
+			.floating { float: right; }
+			.dl-horizontal dt { text-align: left; }
+			.help h2 { margin-top: 0; }
+		</style>
+	</head>
+    <body>
+		<div class="container">
+			<h1>ANAM SERVER</h1>
+			{% if messages %}
+			<div class="row">
+	            <div id="notifications">
+	            {% for message in messages %}
+	                <p class="alert alert-dismissible alert-{% if message.tags == 'error'%}danger{% else %}{{ message.tags }}{% endif %}" role="alert">{{ message|linebreaksbr }}<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+				</button></p>
+	            {% endfor %}
+	            </div>
+	        </div>
+            {% endif %}
+			<div class="row">
+				<table class="table">
+				<tr><th>Réception</th><th>Nb. soumissions</th></tr>
+				{% for collect in collects %}
+				<tr>
+					<td>{{ collect.started_on }}</td>
+					<td>{{ collect.nb_submissions }}</td>
+				</tr>
+				{% empty %}
+				<tr><td colspan="2">Aucune réception pour le moment…</td></tr>
+				{% endfor %}
+				</table>
+			</div>
+		</div>
+	</body>
+	<script src="{% static "js/jquery-3.1.1.min.js" %}"></script>
+	<script src="{% static "js/bootstrap.min.js" %}"></script>
+	<script type="text/javascript">
+		$(document).ready(function(e) {
+			{% block onJQready %}{% endblock %}
+		});
+	</script>
+</html>
