@@ -17,7 +17,7 @@ class Collect(models.Model):
 
     @property
     def nb_submissions(self):
-        return len(self.dataset)
+        return len(self.dataset.get('targets', []))
 
     @property
     def description(self):
