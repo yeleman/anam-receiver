@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 # vim: ai ts=4 sts=4 et sw=4 nu
 
-import logging
 import json
+import lzma
+import logging
 from functools import wraps
 
 from django.conf import settings
@@ -110,8 +111,19 @@ def single_collect(request, collect_id):
 @csrf_exempt
 def api_upload(request):
     ''' JSON upload endpoint for sending a single collect data '''
+
+    if 'xzfile' in request.FILES:
+        try:
+            body = lzma.decompress(request.FILES['xzfile'].read())
+        except Exception as exp:
+            return JsonResponse({'status': 'failed',
+                                 'message': "Failed to uncompress data: {}"
+                                 .format(exp)})
+    else:
+        body = request.body
+
     try:
-        dataset = json.loads(request.body.decode('UTF-8'))
+        dataset = json.loads(body.decode('UTF-8'))
         collect = Collect.objects.create(dataset=dataset)
     except Exception as exp:
         return JsonResponse({'status': 'failed', 'message': str(exp)})
