@@ -51,7 +51,7 @@ class Collect(models.Model):
     def get_indigents(self):
         return [target
                 for target in self.dataset.get('targets', [])
-                if target.get('certificat-indigence')]
+                if True]  # target.get('certificat-indigence')]
 
     @property
     def can_be_imported(self):

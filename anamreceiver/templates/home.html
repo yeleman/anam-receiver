@@ -31,9 +31,10 @@
             {% endif %}
 			<div class="row">
 				<table class="table">
-				<tr><th>Réception</th><th>Cercle</th><th>Commune</th><th>Nb. soumissions</th></tr>
+				<tr><th#</th><th>Réception</th><th>Cercle</th><th>Commune</th><th>Nb. soumissions</th></tr>
 				{% for collect in collects %}
 				<tr>
+					<td>{{ collect.id }}</td>
 					<td>{{ collect.started_on }}</td>
 					<td>{{ collect.dataset.cercle }}</td>
 					<td>{{ collect.dataset.commune }}</td>
