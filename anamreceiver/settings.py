@@ -113,6 +113,8 @@ ALLOW_ANONYMOUS_UPLOADS = True
 UPLOAD_TOKENS = []
 ADMIN_TOKENS = []
 
+DATA_UPLOAD_MAX_MEMORY_SIZE = 2 ** 20 * 20
+
 try:
     from anamreceiver.settings_local import *
 except ImportError:
