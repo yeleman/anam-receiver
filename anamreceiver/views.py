@@ -100,7 +100,7 @@ def api_upload(request):
 
     try:
         dataset = json.loads(body.decode('UTF-8'))
-        collect = Collect.objects.create(dataset=dataset)
+        collect = Collect.create(dataset=dataset)
     except Exception as exp:
         return JsonResponse({'status': 'failed', 'message': str(exp)})
     else:

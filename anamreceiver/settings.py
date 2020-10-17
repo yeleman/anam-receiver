@@ -108,6 +108,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
+FILES = os.path.join(BASE_DIR, 'data')
 
 ALLOW_ANONYMOUS_UPLOADS = True
 UPLOAD_TOKENS = []
