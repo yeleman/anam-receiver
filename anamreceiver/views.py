@@ -26,9 +26,9 @@ def req_token(view_func, registry):
             return view_func(request, *args, **kwargs)
         auth_header = request.META.get("HTTP_AUTHORIZATION", "")
         if 'token' in auth_header.lower():
-                token = auth_header.split(" ", 1)[-1]
-                if token.upper() in registry:
-                    return view_func(request, *args, **kwargs)
+            token = auth_header.split(" ", 1)[-1]
+            if token.upper() in registry:
+                return view_func(request, *args, **kwargs)
         return HttpResponseForbidden()
     return _wrapped_view
 
@@ -54,30 +54,6 @@ def home(request):
         'collects': Collect.objects.order_by('-id'),
     }
     return render(request, 'home.html', context)
-
-
-@require_POST
-@csrf_exempt
-def upload(request):
-    ''' [LEGACY] JSON upload endpoint for anonymously sending
-
-        a single collect data
-        might be deisabled in setings '''
-    if not settings.ALLOW_ANONYMOUS_UPLOADS:
-        return JsonResponse({'status': 'failed',
-                             'message': "Anonymous uploads DISABLED"})
-    try:
-        dataset = json.loads(request.body.decode('UTF-8'))
-        collect = Collect.objects.create(dataset=dataset)
-    except ValueError as exp:
-        return JsonResponse({'status': 'failed',
-                             'message': "Failed to decode JSON: {}"
-                             .format(exp)})
-    except Exception as exp:
-        return JsonResponse({'status': 'failed', 'message': str(exp)})
-    else:
-        return JsonResponse({'status': 'success',
-                             'message': collect.description})
 
 
 @admin_token

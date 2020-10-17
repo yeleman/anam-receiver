@@ -9,7 +9,6 @@ from anamreceiver.admin import admin_site
 
 urlpatterns = [
     url(r'^$', views.home, name='home'),
-    url(r'^upload/?$', views.upload, name='upload'),
 
     url(r'^api/upload/?$', views.api_upload, name='api_upload'),
 
