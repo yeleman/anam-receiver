@@ -138,7 +138,7 @@ class Collect(models.Model):
 
     def mark_imported(self, targets):
         # save targets to file
-        with open(self.targets_file, "w") as fh:
+        with open(self.targets_path, "w") as fh:
             json.dump(targets, fh, indent=4)
         # self.targets = targets
         self.imported_on = timezone.now()

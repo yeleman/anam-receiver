@@ -102,6 +102,7 @@ def api_upload(request):
         dataset = json.loads(body.decode('UTF-8'))
         collect = Collect.create(dataset=dataset)
     except Exception as exp:
+        logger.exception(exp)
         return JsonResponse({'status': 'failed', 'message': str(exp)})
     else:
         return JsonResponse({'status': 'success',
@@ -118,6 +119,7 @@ def mark_imported(request, collect_id):
         targets = json.loads(request.body.decode('UTF-8'))
         collect.mark_imported(targets)
     except Exception as exp:
+        logger.exception(exp)
         return JsonResponse({'status': 'failed', 'message': str(exp)})
     else:
         return JsonResponse({'status': 'success',
@@ -136,6 +138,7 @@ def mark_images_copied(request, collect_id):
             images_nb_total=payload['images_nb_total'],
             images_nb_error=payload['images_nb_error'])
     except Exception as exp:
+        logger.exception(exp)
         return JsonResponse({'status': 'failed', 'message': str(exp)})
     else:
         return JsonResponse({'status': 'success',
@@ -151,6 +154,7 @@ def archive(request, collect_id):
     try:
         collect.mark_archived()
     except Exception as exp:
+        logger.exception(exp)
         return JsonResponse({'status': 'failed', 'message': str(exp)})
     else:
         return JsonResponse({'status': 'success',
@@ -166,6 +170,7 @@ def unarchive(request, collect_id):
     try:
         collect.unmark_archived()
     except Exception as exp:
+        logger.exception(exp)
         return JsonResponse({'status': 'failed', 'message': str(exp)})
     else:
         return JsonResponse({'status': 'success',
