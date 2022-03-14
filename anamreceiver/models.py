@@ -132,7 +132,8 @@ class Collect(models.Model):
     def full_dict(self):
         d = self.to_dict()
         d.update({'dataset': self.dataset_file})
-        d.update({'targets': self.targets_file})
+        if self.imported:
+            d.update({'targets': self.targets_file})
         return d
 
     def mark_imported(self, targets):
