@@ -37,6 +37,7 @@ class Collect(models.Model):
         with open(collect.dataset_path, "w") as fh:
             json.dump(dataset, fh)
         collect.save_metadata(dataset)
+        return collect
 
     def save_metadata(self, dataset):
         self.nb_submissions = len(dataset.get("targets", []))
